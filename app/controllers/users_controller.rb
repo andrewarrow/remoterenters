@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   
   def new
+    @flavor = params[:flavor]
     @user = User.new
   end
 

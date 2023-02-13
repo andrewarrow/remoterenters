@@ -1,9 +1,7 @@
 <main class="container">
   <div class="header">
     <h1>RemoteRenters.com</h1>
-    <%= link_to "Sign up",
-                new_user_path,
-                class: "btn btn--primary" %>
+    <a href="#sign-up" class="btn btn--primary">Sign Up As...</a>
     <%= link_to "Log in",
                 new_quote_path,
                 class: "btn btn--secondary" %>
@@ -52,6 +50,15 @@
       <li>Group meals, humans like to eat together.</li>
     </ol>
   </div>
+
+  <div class="welcome">
+    Listen to Marc Andreessen and Adam Neumann Discuss Renting and Remote Workers:
+  </div>
+  <div class="welcome">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/vTHMwJ8kzjw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+  </div>
+
+  <div id="sign-up">
   <div class="welcome">
     <h2>Types of Users</h2>
   </div>
@@ -61,7 +68,7 @@
     Find your next place to rent anywhere in the world.
     </p>
     <%= link_to "Sign up as a Tenant",
-                new_user_path,
+                new_user_path(flavor: 'tenant'),
                 class: "btn btn--primary" %>
   </div>
   <div class="welcome">
@@ -70,7 +77,7 @@
     List your building here to find remote renters! 
     </p>
     <%= link_to "Sign up as a Landlord",
-                new_user_path,
+                new_user_path(flavor: 'landlord'),
                 class: "btn btn--secondary" %>
   </div>
   <div class="welcome">
@@ -79,7 +86,7 @@
     Put up capital to convert buildings and get a return.
     </p>
     <%= link_to "Sign up as an Investor",
-                new_user_path,
+                new_user_path(flavor: 'investor'),
                 class: "btn btn--dark" %>
   </div>
   <div class="welcome">
@@ -88,9 +95,9 @@
     Get work converting existing buildings to campuses.
     </p>
     <%= link_to "Sign up as a Contractor",
-                new_user_path,
+                new_user_path(flavor: 'contractor'),
                 class: "btn btn--light" %>
   </div>
+  </div>
 
-  <%= render @quotes %>
 </main>
