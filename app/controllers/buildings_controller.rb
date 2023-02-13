@@ -4,4 +4,8 @@ class BuildingsController < ApplicationController
     @items = Building.all.limit(50)
   end
 
+  def show
+    @building = Building.find_by_guid(params[:id])
+  end
+
 end
