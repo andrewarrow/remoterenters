@@ -2,10 +2,13 @@ databases:
   - name: remoterenters
     databaseName: remoterenters
     user: remoterenters
+    instanceType: free
 
 services:
   - type: web
     name: remoterenters
+    instanceType: free
+    numInstances: 1
     env: ruby
     buildCommand: "./bin/render-build.sh"
     startCommand: "bundle exec puma -C config/puma.rb"
