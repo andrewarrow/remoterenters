@@ -2,12 +2,12 @@ databases:
   - name: remoterenters
     databaseName: remoterenters
     user: remoterenters
-    instanceType: free
+  - instanceType: free
 
 services:
+  - instanceType: free
   - type: web
     name: remoterenters
-    instanceType: free
     numInstances: 1
     env: ruby
     buildCommand: "./bin/render-build.sh"
