@@ -1,0 +1,9 @@
+<main class="container">
+  <%= link_to sanitize("&larr; Back to dashboard"), dashboard_path %>
+
+  <div class="header">
+    <h1>Add Building</h1>
+  </div>
+
+  <%= render "form", building: @building %>
+</main>

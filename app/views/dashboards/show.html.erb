@@ -24,7 +24,9 @@
 
   <div class="welcome">
     <p>
-    <a href="#" class="btn btn--primary">Add/Edit Buildings</a>
+    <%= link_to "Add Building",
+                new_building_path,
+                class: "btn btn--dark" %>
     </p>
     <p>
     <a href="#" class="btn btn--secondary">Review Applications</a>
