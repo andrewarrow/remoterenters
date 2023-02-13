@@ -3,11 +3,6 @@ databases:
     databaseName: remoterenters
     user: remoterenters
 
-databases:
-  - name: remoterenters
-    databaseName: remoterenters
-    user: remoterenters
-
 services:
   - type: web
     name: remoterenters
