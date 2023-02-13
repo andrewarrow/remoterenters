@@ -1,0 +1,9 @@
+<main class="container">
+  <%= link_to sanitize("&larr; Back to home"), root_path %>
+
+  <div class="header">
+    <h1>New user</h1>
+  </div>
+
+  <%= render "form", user: @user %>
+</main>
