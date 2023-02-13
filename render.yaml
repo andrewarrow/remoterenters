@@ -1,0 +1,23 @@
+databases:
+  - name: remoterenters
+    databaseName: remoterenters
+    user: remoterenters
+
+databases:
+  - name: remoterenters
+    databaseName: remoterenters
+    user: remoterenters
+
+services:
+  - type: web
+    name: remoterenters
+    env: ruby
+    buildCommand: "./bin/render-build.sh"
+    startCommand: "bundle exec puma -C config/puma.rb"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: remoterenters
+          property: connectionString
+      - key: RAILS_MASTER_KEY
+        sync: false
