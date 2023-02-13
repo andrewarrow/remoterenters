@@ -10,7 +10,9 @@
     <a href="#" class="btn btn--primary">My Current Building</a>
     </p>
     <p>
-    <a href="#" class="btn btn--secondary">Search Buildings</a>
+    <%= link_to "Search Buildings",
+                buildings_path,
+                class: "btn btn--secondary" %>
     </p>
   </div>
 
