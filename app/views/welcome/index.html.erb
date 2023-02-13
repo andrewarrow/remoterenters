@@ -52,6 +52,45 @@
       <li>Group meals, humans like to eat together.</li>
     </ol>
   </div>
+  <div class="welcome">
+    <h2>Types of Users</h2>
+  </div>
+  <div class="welcome">
+    <p>
+    <strong>Tentants</strong><br/>
+    Find your next place to rent anywhere in the world.
+    </p>
+    <%= link_to "Sign up as a Tenant",
+                new_user_path,
+                class: "btn btn--primary" %>
+  </div>
+  <div class="welcome">
+    <p>
+    <strong>Landlords</strong><br/>
+    List your building here to find remote renters! 
+    </p>
+    <%= link_to "Sign up as a Landlord",
+                new_user_path,
+                class: "btn btn--secondary" %>
+  </div>
+  <div class="welcome">
+    <p>
+    <strong>Investors</strong><br/>
+    Put up capital to convert buildings and get a return.
+    </p>
+    <%= link_to "Sign up as an Investor",
+                new_user_path,
+                class: "btn btn--dark" %>
+  </div>
+  <div class="welcome">
+    <p>
+    <strong>Contractors</strong><br/>
+    Get work converting existing buildings to campuses.
+    </p>
+    <%= link_to "Sign up as a Contractor",
+                new_user_path,
+                class: "btn btn--light" %>
+  </div>
 
   <%= render @quotes %>
 </main>
