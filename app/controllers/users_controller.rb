@@ -6,6 +6,11 @@ class UsersController < ApplicationController
   end
 
   def create
+    if params[:login] == '1'
+      redirect_to dashboard_path, notice: "User was logged in."
+      return
+    end
+
     @user = User.new(user_params)
     @user.name = ''
     @flavor = params[:flavor]
