@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     @flavor = params[:flavor]
 
     if @user.save
-      redirect_to root_path, notice: "User was successfully created."
+      redirect_to dashboard_path, notice: "User was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
