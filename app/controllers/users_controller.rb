@@ -7,6 +7,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
+    @user.name = ''
+    @flavor = params[:flavor]
 
     if @user.save
       redirect_to root_path, notice: "User was successfully created."
@@ -18,6 +20,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name)
+    params.require(:user).permit(:email)
   end
 end
