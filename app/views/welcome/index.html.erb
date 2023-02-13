@@ -1,0 +1,10 @@
+<main class="container">
+  <div class="header">
+    <h1>RemoteRenters.com</h1>
+    <%= link_to "Log in",
+                new_quote_path,
+                class: "btn btn--primary" %>
+  </div>
+
+  <%= render @quotes %>
+</main>
