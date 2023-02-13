@@ -6,3 +6,8 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 system("rails db:fixtures:load")
+
+Role.create(name: "tenant")
+Role.create(name: "landlord")
+Role.create(name: "investor")
+Role.create(name: "contractor")

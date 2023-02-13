@@ -5,6 +5,19 @@
     </div>
   <% end %>
 
-  <%= f.input :name, input_html: { autofocus: true } %>
+  <div class="welcome">
+  <%= f.input :email, placeholder: 'email', input_html: { autofocus: true } %>
+  </div>
+  <div class="welcome">
+  <%= f.association :roles, as: :check_boxes %>
+  </div>
   <%= f.submit class: "btn btn--secondary" %>
 <% end %>
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
