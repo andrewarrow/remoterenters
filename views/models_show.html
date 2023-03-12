@@ -1,0 +1,102 @@
+                  <tr class="athing">
+                    <td colspan="2" class="title" valign="top" align="left">
+                            Show {{ .Model.Name }}
+                    </td>
+                  </tr>
+                  <tr class="athing">
+                    <td class="title">&nbsp; </td>
+                  </tr>
+                  <tr class="athing">
+                    <td class="title">
+                      <table id="models" border="0">
+             {{range $i, $item := .Model.Fields}}
+                  <tr class="athing" colspan="2">
+                          <td>x</td>
+                    <td class="title" valign="top" align="right">
+                            <span class="rank">{{add $i 1}}.</span>
+                    </td>      
+                    <td class="title">
+                     <span class="titleline">
+                             <a href="/models/{{$item.Name}}/">{{$item.Name}}</a>
+                     </span>
+                    </td>
+                    <td class="title">
+                            {{$item.Flavor}}
+                    </td>
+                    <td class="title">
+                            {{$item.Index}}
+                    </td>
+                 </tr>
+             {{end}}
+                 <tr>
+                    <td class="title" colspan="16">
+                       <form id="form1" method="POST" action="/models/{{.Model.Name}}/">
+                         <select name="flavor">
+                                 <option>fewWords</option>
+                                 <option>oneWord</option>
+                                 <option>uuid</option>
+                                 <option>address</option>
+                                 <option>city</option>
+                                 <option>state</option>
+                                 <option>postal</option>
+                                 <option>country</option>
+                                 <option>url</option>
+                                 <option>phone</option>
+                                 <option>int</option>
+                                 <option>text</option>
+                         </select>
+                         <select name="index">
+                                 <option></option>
+                                 <option>yes</option>
+                                 <option>unique</option>
+                         </select>
+                         <input type="text" name="name" id="name" autofocus="true"/>
+                         <input type="submit" value="add field"/>
+                       </form>
+                    </td>
+                 </tr>
+                  <tr class="athing" colspan="2">
+
+             {{$fields := .Model.Fields}}
+                    <th class="title" valign="top" align="right">
+                            &nbsp;
+                    </th>      
+                    <th class="title" valign="top" align="right">
+                            &nbsp;
+                    </th>      
+             {{range $i, $item := $fields}}
+                    <th class="title" valign="top" align="right">
+                            {{ $item.Name }}
+                    </th>      
+             {{end}}
+                 </tr>
+             {{$rows := .Rows}}
+             {{$model := .Model}}
+             {{range $i, $item := $rows }}
+                  <tr class="athing" colspan="2">
+                    <td class="title" valign="top">
+      <form id="f{{index $item "guid" }}" method="POST" action="/models/{{$model.Name}}/{{index $item "guid" }}/">
+              <input type="hidden" name="_method" value="DELETE"/>
+      </form>
+              <a href="#" onclick="doDeletePost('{{index $item "guid" }}', event);">x</a> 
+              <br/>
+
+              <a href="/models/{{$model.Name}}/{{index $item "guid" }}/">e</a> 
+              <br/>
+                    </td>
+                    <td class="title" valign="top" align="right">
+                            <span class="rank">{{add $i 1}}.</span>
+                    </td>      
+             {{range $key := $fields}}
+                    <td class="title" valign="top">
+                            {{ index $item $key.Name }}
+                    </td>
+             {{end}}
+                 </tr>
+             {{end}}
+             <tr><td colspan="20">
+                       <form id="form2" method="POST" action="/models/{{.Model.Name}}/">
+                         <input type="submit" value="insert row"/>
+                       </form>
+                     </td></tr>
+                      </table></td></tr>
