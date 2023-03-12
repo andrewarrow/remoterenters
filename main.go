@@ -3,6 +3,7 @@ package main
 import (
 	"math/rand"
 	"os"
+	"remoterenters/app"
 	"time"
 
 	"github.com/andrewarrow/feedback/router"
@@ -19,6 +20,12 @@ func main() {
 		router.InitNewApp()
 	} else if arg == "run" {
 		r := router.NewRouter()
+		r.Paths["buildings"] = app.HandleBuildings
+		r.Paths["fresh"] = app.HandleFresh
+		r.Paths["vote"] = app.HandleVote
+		r.Paths["sites"] = app.HandleSites
+		r.Paths["comments"] = app.HandleComments
+		r.Paths["stories"] = app.HandleStories
 		r.ListenAndServe(":3000")
 	} else if arg == "help" {
 	}
