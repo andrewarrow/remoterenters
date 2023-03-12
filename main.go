@@ -20,6 +20,7 @@ func main() {
 		router.InitNewApp()
 	} else if arg == "run" {
 		r := router.NewRouter()
+		r.Paths["/"] = app.HandleWelcome
 		r.Paths["buildings"] = app.HandleBuildings
 		r.Paths["fresh"] = app.HandleFresh
 		r.Paths["vote"] = app.HandleVote
