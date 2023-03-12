@@ -28,11 +28,11 @@ func main() {
 		r.Paths["comments"] = app.HandleComments
 		r.Paths["stories"] = app.HandleStories
 
-		r.UserRequiredPaths["/fresh/"] = router.NewUserRequired("GET", "==")
-		r.UserRequiredPaths["/buildings/"] = router.NewUserRequired("GET", "prefix")
-		r.UserRequiredPaths["/stories/"] = router.NewUserRequired("GET", "prefix")
-		r.UserRequiredPaths["/stories/new/"] = router.NewUserRequired("GET", "!=")
-		r.UserRequiredPaths["/comments/"] = router.NewUserRequired("GET", "prefix")
+		r.UserRequiredPaths = []*router.UserRequired{
+			router.NewUserRequired("/stories/", "POST", "prefix"),
+			router.NewUserRequired("/comments/", "POST", "prefix"),
+			router.NewUserRequired("/stories/new/", "GET", "=="),
+		}
 
 		r.ListenAndServe(":3000")
 	} else if arg == "help" {
