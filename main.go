@@ -28,12 +28,6 @@ func main() {
 		r.Paths["comments"] = app.HandleComments
 		r.Paths["stories"] = app.HandleStories
 
-		r.UserRequiredPaths = []*router.UserRequired{
-			router.NewUserRequired("/stories/", "POST", "prefix"),
-			router.NewUserRequired("/comments/", "POST", "prefix"),
-			router.NewUserRequired("/stories/new/", "GET", "=="),
-		}
-
 		r.ListenAndServe(":3000")
 	} else if arg == "help" {
 	}

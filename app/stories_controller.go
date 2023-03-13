@@ -20,7 +20,10 @@ func HandleStories(c *router.Context, second, third string) {
 		c.NotFound = true
 	} else {
 		if second == "new" {
-			c.SendContentInLayout("stories_new.html", nil, 200)
+			c.UserRequired = true
+			if c.User != nil {
+				c.SendContentInLayout("stories_new.html", nil, 200)
+			}
 			return
 		} else if second != "" {
 			story := FetchStory(c.Db, second)

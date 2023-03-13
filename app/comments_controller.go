@@ -46,6 +46,10 @@ func showComment(c *router.Context, second string) {
 }
 
 func postComment(c *router.Context, second string) {
+	c.UserRequired = true
+	if c.User == nil {
+		return
+	}
 	body := strings.TrimSpace(c.Request.FormValue("body"))
 	returnPath := "/stories/" + second + "/"
 	if len(body) < 10 {
