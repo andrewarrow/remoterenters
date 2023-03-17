@@ -16,6 +16,18 @@ func handleSubsIndex(c *router.Context) {
 	c.SendContentInLayout("subs_index.html", nil, 200)
 }
 
-func handleSubsShow(c *router.Context, sub string) {
-	c.SendContentInLayout("subs_show.html", nil, 200)
+func handleSubsShow(c *router.Context, slug string) {
+	if c.Method == "POST" {
+		handleCreateSub(c, slug)
+		return
+	}
+	sub := FetchSub(c, slug)
+	if len(sub) == 0 {
+		c.SendContentInLayout("subs_new.html", slug, 200)
+	} else {
+		c.SendContentInLayout("subs_show.html", nil, 200)
+	}
+}
+
+func handleCreateSub(c *router.Context, slug string) {
 }

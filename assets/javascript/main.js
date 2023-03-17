@@ -1,3 +1,8 @@
+function fillInFieldName() {
+  const flavor = document.getElementById('flavor');
+  const name = document.getElementById('name');
+  name.value = flavor.value;
+}
 
 function doLogout(e) {
   e.preventDefault();
@@ -28,17 +33,17 @@ function vote(guid, e) {
   xhr.send();
 }
 
-function sendFormAsJson(e) {
+function sendFormAsJson(name, e) {
   e.preventDefault();
   const form = document.getElementById('form1');
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', '/models/');
+  xhr.open('POST', '/'+name+'/');
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.addEventListener('load', function(event) {
      if (xhr.status != 200) {
         document.getElementById('flash').innerHTML = event.target.response;
      } else {
-        document.getElementById('models').innerHTML = event.target.response;
+        document.getElementById(name).innerHTML = event.target.response;
         document.getElementById('name').value = '';
         document.getElementById('flash').innerHTML = '';
      }

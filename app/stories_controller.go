@@ -1,9 +1,12 @@
 package app
 
 import (
+	"html"
+	"html/template"
 	"net/http"
 	"strings"
 
+	"github.com/andrewarrow/feedback/models"
 	"github.com/andrewarrow/feedback/router"
 	"github.com/andrewarrow/feedback/util"
 )
@@ -79,16 +82,19 @@ func handleStoryShow(c *router.Context, second string) {
 		c.SendContentInLayout("stories_new.html", nil, 200)
 	} else if second != "" {
 
-		storyShow := StoryShow{}
+		story := FetchStory(c, second)
 
-		storyShow.Story = FetchStory(c, second)
-
-		if len(storyShow.Story) == 0 {
+		if len(story) == 0 {
 			c.NotFound = true
 			return
 		}
+		story["title"] = models.RemoveMostNonAlphanumeric(story["title"].(string))
+		body := strings.Replace(html.EscapeString(story["body"].(string)), "\n", "<br/>", -1)
+		story["body"] = template.HTML(body + "<br/><br/>")
 		model := c.FindModel("comment")
-		params := []any{storyShow.Story["id"]}
+		params := []any{story["id"]}
+		storyShow := StoryShow{}
+		storyShow.Story = story
 		storyShow.Comments = c.SelectAllFrom(model, "where story_id=$1", params)
 		c.Title = storyShow.Story["title"].(string)
 		c.SendContentInLayout("stories_show.html", storyShow, 200)

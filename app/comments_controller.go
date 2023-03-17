@@ -1,6 +1,8 @@
 package app
 
 import (
+	"html"
+	"html/template"
 	"net/http"
 	"strings"
 
@@ -42,6 +44,8 @@ func showComment(c *router.Context, second string) {
 		title = title[0:40] + "..."
 	}
 	comment["story_title"] = title
+	body := strings.Replace(html.EscapeString(comment["body"].(string)), "\n", "<br/>", -1)
+	comment["body"] = template.HTML(body + "<br/><br/>")
 	c.SendContentInLayout("comments_show.html", comment, 200)
 	return
 }
