@@ -4,7 +4,7 @@ module remoterenters
 
 go 1.19
 
-require github.com/andrewarrow/feedback v0.0.0-20230317194941-6cc9ad950a46
+require github.com/andrewarrow/feedback latest
 
 require (
 	github.com/brianvoe/gofakeit/v6 v6.20.1 // indirect

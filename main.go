@@ -27,6 +27,7 @@ func main() {
 		r.Paths["sites"] = app.HandleSites
 		r.Paths["comments"] = app.HandleComments
 		r.Paths["stories"] = app.HandleStories
+		r.Paths["rr"] = app.HandleSubs
 
 		r.ListenAndServe(":3000")
 	} else if arg == "help" {
