@@ -92,7 +92,5 @@ func handleStoryShow(c *router.Context, second string) {
 		storyShow.Comments = c.SelectAllFrom(model, "where story_id=$1", params)
 		c.Title = storyShow.Story["title"].(string)
 		c.SendContentInLayout("stories_show.html", storyShow, 200)
-		return
 	}
-	c.NotFound = true
 }

@@ -11,6 +11,7 @@ func HandleFresh(c *router.Context, second, third string) {
 		c.NotFound = true
 	}
 }
+
 func handleFreshIndex(c *router.Context) {
 	model := c.FindModel("story")
 	rows := c.SelectAllFrom(model, "order by created_at desc", c.EmptyParams())

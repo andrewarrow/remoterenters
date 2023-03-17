@@ -47,8 +47,8 @@ func showComment(c *router.Context, second string) {
 }
 
 func postComment(c *router.Context, second string) {
-	c.UserRequired = true
 	if c.User == nil {
+		c.UserRequired = true
 		return
 	}
 	body := strings.TrimSpace(c.Request.FormValue("body"))
