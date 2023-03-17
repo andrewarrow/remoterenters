@@ -8,40 +8,12 @@ import (
 	"github.com/andrewarrow/feedback/util"
 )
 
-type StoryShow struct {
-	Story    *Story
-	Comments []*Comment
-}
-
 func HandleStories(c *router.Context, second, third string) {
 	if second == "" {
 		handleStoriesIndex(c)
-	} else if third != "" {
-		c.NotFound = true
+	} else if second != "" && third == "" {
+		handleStoryShow(c, second)
 	} else {
-		if second == "new" {
-			c.UserRequired = true
-			if c.User != nil {
-				c.SendContentInLayout("stories_new.html", nil, 200)
-			}
-			return
-		} else if second != "" {
-			story := FetchStory(c.Db, second)
-			if story == nil {
-				c.NotFound = true
-				return
-			}
-			if story.HasUrl && story.Domain == "" {
-				story.Domain = util.ExtractDomain(story.Url)
-				c.Db.Exec("update stories set domain=$1 where guid=$2", story.Domain, second)
-			}
-			storyShow := StoryShow{}
-			storyShow.Story = story
-			storyShow.Comments = FetchComments(c.Db, story.Id)
-			c.Title = story.Title
-			c.SendContentInLayout("stories_show.html", storyShow, 200)
-			return
-		}
 		c.NotFound = true
 	}
 }
@@ -88,6 +60,39 @@ func handleStoriesIndex(c *router.Context) {
 			c.Db.Exec("insert into stories (title, body, guid, username) values ($1, $2, $3, $4)", title, body, guid, c.User.Username)
 		}
 		http.Redirect(c.Writer, c.Request, "/", 302)
+		return
+	}
+	c.NotFound = true
+}
+
+type StoryShow struct {
+	Story    map[string]any
+	Comments []*map[string]any
+}
+
+func handleStoryShow(c *router.Context, second string) {
+	if second == "new" {
+		if c.User == nil {
+			c.UserRequired = true
+			return
+		}
+		c.SendContentInLayout("stories_new.html", nil, 200)
+	} else if second != "" {
+
+		storyShow := StoryShow{}
+
+		model := c.FindModel("story")
+		params := []any{second}
+		storyShow.Story = c.SelectOneFrom(model, "where guid=$1", params)
+
+		if len(storyShow.Story) == 0 {
+			c.NotFound = true
+			return
+		}
+		model = c.FindModel("comment")
+		params = []any{storyShow.Story["id"]}
+		storyShow.Comments = c.SelectAllFrom(model, "where story_id=$1", params)
+		c.SendContentInLayout("stories_show.html", storyShow, 200)
 		return
 	}
 	c.NotFound = true

@@ -2,22 +2,24 @@
       <td align="right" valign="top" class="title">
               &nbsp;
       </td>      
-      {{ template "_story" .}}
+      {{ template "_story" .Story}}
 
-      {{if .Story.HasUrl}}
+      {{$url := index .Story "url"}}
+      {{if ne $url ""}}
        <tr class="spacer" style="height:15px"></tr>
       {{else}}
        <tr class="spacer" style="height:5px"></tr>
        <tr>
         <td colspan="2"></td>
         <td>
-          {{.Story.Body}}
+          {{index .Story "body"}}
         </td>
        </tr>
       {{end}}
 
        <tr>
-       <td colspan="2"></td><td><form action="/comments/{{.Story.Guid}}/" method="POST">
+       <td colspan="2"></td><td>
+          <form action="/comments/{{index .Story "guid"}}/" method="POST">
          <textarea name="body" rows="8" cols="80" wrap="virtual"></textarea><br><br>
 <input type="submit" value="add comment"></form></td>
        </tr>
@@ -38,9 +40,9 @@
         <td class="default">
                 <div style="margin-top:2px; margin-bottom:-10px;">
                         <span class="comhead">
-     <a href="/users/{{$item.Username}}/" class="user">{{$item.Username}}</a> 
-     <span class="age" title="{{$item.Timestamp}}">
-             <a href="/comments/{{$item.Guid}}/">{{$item.Ago}}</a></span>
+     <a href="/users/{{index $item "username"}}/" class="user">{{index $item "username"}}</a> 
+     <span class="age" title="{{index $item "created_at"}}">
+             <a href="/comments/{{index $item "guid"}}/">{{index $item "created_at_ago"}}</a></span>
      <span id="unv_35025405"></span>        
      <span class="navs">
      <!--
@@ -54,10 +56,10 @@
 
                   <div class="comment">
                   <span class="commtext c00">
-                          {{$item.Body}}
+                          {{index $item "body"}}
               <div class="reply">       
                       <p><font size="1">
-                      <u><a href="/comments/{{$item.Guid}}/">reply</a></u>
+                      <u><a href="/comments/{{index $item "guid"}}/">reply</a></u>
                   </font>
       </p></div></span></div></td></tr>
        <tr class="spacer" style="height:15px"></tr>
