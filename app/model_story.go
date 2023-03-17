@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/andrewarrow/feedback/models"
-	"github.com/andrewarrow/feedback/router"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -58,7 +57,7 @@ func storyFromMap(m map[string]any) *Story {
 		story.HasUrl = true
 	}
 
-	story.Timestamp, story.Ago = router.FixTime(m)
+	//story.Timestamp, story.Ago = router.FixTime(m)
 	return &story
 }
 

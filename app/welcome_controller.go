@@ -1,20 +1,19 @@
 package app
 
-import (
-	"github.com/andrewarrow/feedback/router"
-	"github.com/jmoiron/sqlx"
-)
+import "github.com/andrewarrow/feedback/router"
 
 func HandleWelcome(c *router.Context, second, third string) {
-	c.SendContentInLayout("welcome.html", WelcomeIndexVars(c.Db, "points desc", ""), 200)
+	if second == "" {
+		handleWelcomeIndex(c)
+	} else if second != "" && third == "" {
+		c.NotFound = true
+	} else {
+		c.NotFound = true
+	}
 }
 
-type WelcomeVars struct {
-	Rows []*Story
-}
-
-func WelcomeIndexVars(db *sqlx.DB, order, domain string) *WelcomeVars {
-	vars := WelcomeVars{}
-	vars.Rows = FetchStories(db, order, domain)
-	return &vars
+func handleWelcomeIndex(c *router.Context) {
+	model := c.FindModel("story")
+	rows := c.SelectAllFrom(model, "order by points", c.EmptyParams())
+	c.SendContentInLayout("stories_index.html", rows, 200)
 }

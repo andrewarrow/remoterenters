@@ -31,10 +31,12 @@
                  <tr>
                     <td class="title" colspan="16">
                        <form id="form1" method="POST" action="/models/{{.Model.Name}}/">
-                         <select name="flavor">
+                         <select name="flavor" id="flavor" onchange="fillInFieldName();">
+                                 <option>name</option>
                                  <option>fewWords</option>
                                  <option>oneWord</option>
                                  <option>uuid</option>
+                                 <option>address_1_line</option>
                                  <option>address</option>
                                  <option>city</option>
                                  <option>state</option>
@@ -44,6 +46,7 @@
                                  <option>phone</option>
                                  <option>int</option>
                                  <option>text</option>
+                                 <option>timestamp</option>
                          </select>
                          <select name="index">
                                  <option></option>

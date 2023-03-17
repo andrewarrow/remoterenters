@@ -5,21 +5,17 @@ import "github.com/andrewarrow/feedback/router"
 func HandleBuildings(c *router.Context, second, third string) {
 	if second == "" {
 		handleBuildingsIndex(c)
-	} else if third != "" {
-		c.NotFound = true
-	} else {
+	} else if second != "" && third == "" {
 		handleBuildingsShow(c)
+	} else {
+		c.NotFound = true
 	}
 }
 
-type BuildingVars struct {
-	Rows []*Building
-}
-
 func handleBuildingsIndex(c *router.Context) {
-	vars := BuildingVars{}
-	vars.Rows = FetchBuildings(c.Db)
-	c.SendContentInLayout("buildings_index.html", &vars, 200)
+	model := c.FindModel("building")
+	rows := c.SelectAllFrom(model, "", c.EmptyParams())
+	c.SendContentInLayout("buildings_index.html", rows, 200)
 }
 
 func handleBuildingsShow(c *router.Context) {

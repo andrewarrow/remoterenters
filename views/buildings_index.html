@@ -20,7 +20,7 @@
                         of how we think the remote renter experience should be!
               </td></tr>
       <tr class="spacer" style="height:15px"></tr>
-{{range $i, $item := .Rows}}
+{{range $i, $item := .}}
  <tr class='athing'>
       <td>      
               &nbsp;
@@ -31,9 +31,9 @@
       </td>      
       <td class="title">
             <span class="titleline">
-      <a href="{{$item.Url}}" rel="nofollow">{{$item.Name}}</a>
+      <a href="{{index $item "url"}}" rel="nofollow">{{index $item "name"}}</a>
              <span class="sitebit comhead"> 
-                     (<a href="/buildings/{{$item.Guid}}/"><span class="sitestr">{{$item.City}}, {{$item.State}}</span></a>)
+                     (<a href="/buildings/{{index $item "guid"}}/"><span class="sitestr">{{index $item "city"}}, {{index $item "state"}}</span></a>)
               </span>
             </span>
         </td>
@@ -43,9 +43,9 @@
         <td class="subtext"><span class="subline">
           <span class="score">{{$item.Units}} units</span> 
           at {{$item.Address}}
-          <span class="age" title="{{$item.Timestamp}}">
-                  <a href="/buildings/{{$item.Guid}}/">{{$item.Ago}}</a></span> |
-          <a href="/buildings/{{ $item.Guid }}/">details</a> 
+          <span class="age" title="{{index $item "created_at"}}">
+                  <a href="/buildings/{{index $item "guid"}}/">{{index $item "created_at_ago"}}</a></span> |
+          <a href="/buildings/{{ index $item "guid" }}/">details</a> 
                 </span>
               </td></tr>
       <tr class="spacer" style="height:5px"></tr>

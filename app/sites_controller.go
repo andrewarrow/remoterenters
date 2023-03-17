@@ -8,6 +8,6 @@ func HandleSites(c *router.Context, second, third string) {
 	} else if third != "" {
 		c.NotFound = true
 	} else {
-		c.SendContentInLayout("welcome.html", WelcomeIndexVars(c.Db, "created_at desc", second), 200)
+		//c.SendContentInLayout("welcome.html", WelcomeIndexVars(c.Db, "created_at desc", second), 200)
 	}
 }

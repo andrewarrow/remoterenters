@@ -6,7 +6,6 @@ import (
 	"html/template"
 	"strings"
 
-	"github.com/andrewarrow/feedback/router"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -62,6 +61,6 @@ func commentFromMap(m map[string]any) *Comment {
 	body := strings.Replace(html.EscapeString(c.RawBody), "\n", "<br/>", -1)
 	c.Body = template.HTML(body + "<br/>")
 
-	c.Timestamp, c.Ago = router.FixTime(m)
+	//c.Timestamp, c.Ago = router.FixTime(m)
 	return &c
 }
