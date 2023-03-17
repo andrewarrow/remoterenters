@@ -2,39 +2,7 @@
       <td align="right" valign="top" class="title">
               &nbsp;
       </td>      
-      <td valign="top" class="votelinks">
-              <center>
-        <a id="v{{.Story.Guid}}" class='clicky' href='#' onclick="vote('{{.Story.Guid}}', event)">
-        <div class='votearrow' title='upvote'></div>
-                      </a>
-              </center>
-      </td>
-      <td class="title">
-            <span class="titleline">
-      {{if .Story.HasUrl}}
-      <a href="{{.Story.Url}}" rel="nofollow">{{.Story.Title}}</a>
-      {{else}}
-      <a href="/stories/{{.Story.Guid}}/" rel="nofollow">{{.Story.Title}}</a>
-      {{end}}
-             <span class="sitebit comhead"> 
-      {{if .Story.HasUrl}}
-      (<a href="/sites/{{.Story.Domain}}/"><span class="sitestr">{{.Story.Domain}}</span></a>)
-      {{end}}
-              </span>
-            </span>
-        </td>
-       </tr>
-       <tr>
-        <td colspan="2"></td>
-        <td class="subtext"><span class="subline">
-                        <span class="score">{{.Story.Points}} point{{adds .Story.Points}}</span> 
-          by <a href="/users/{{.Story.Username}}/" class="user">{{.Story.Username}}</a> 
-          <span class="age" title="{{.Story.Timestamp}}">
-                  <a href="/stories/{{.Story.Guid}}/">{{.Story.Ago}}</a></span> |
-          <a href="/stories/{{ .Story.Guid }}/">discuss</a> |
-          <a href="/stories/{{ .Story.Guid }}/">{{.Story.Comments}} comment{{adds .Story.Comments}}</a>        
-                </span>
-              </td></tr>
+      {{ template "_story" .}}
 
       {{if .Story.HasUrl}}
        <tr class="spacer" style="height:15px"></tr>

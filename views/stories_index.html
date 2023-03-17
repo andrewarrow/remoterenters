@@ -3,41 +3,6 @@
       <td align="right" valign="top" class="title">
               <span class="rank">{{add $i 1}}.</span>
       </td>      
-      <td valign="top" class="votelinks">
-              <center>
-        <a id="v{{index $item "guid"}}" class='clicky' href='#' onclick="vote('{{index $item "guid"}}', event)">
-        <div class='votearrow' title='upvote'></div>
-                      </a>
-              </center>
-      </td>
-      <td class="title">
-            <span class="titleline">
-      {{ $url := index $item "url" }}
-      {{if eq $url ""}}
-        <a href="/stories/{{index $item "guid"}}/" rel="nofollow">{{index $item "title"}}</a>
-      {{else}}
-        <a href="{{$url}}" rel="nofollow">{{index $item "title"}}</a>
-      {{end}}
-      <span class="sitebit comhead"> 
-      {{if ne $url ""}}
-      (<a href="/sites/{{index $item "domain"}}/"><span class="sitestr">{{index $item "domain"}}</span></a>)
-      {{end}}
-              </span>
-            </span>
-        </td>
-       </tr>
-       <tr>
-        <td colspan="2"></td>
-        <td class="subtext"><span class="subline">
-          {{ $points := index $item "points" }}
-          <span class="score">{{$points}} point{{adds $points}}</span> 
-          by <a href="/users/{{index $item "username"}}/" class="user">{{index $item "username"}}</a> 
-          <span class="age" title="{{index $item "created_at"}}">
-                  <a href="/stories/{{index $item "guid"}}/">{{index $item "created_at_ago"}}</a></span> |
-          <a href="/stories/{{ index $item "guid" }}/">discuss</a> |
-          {{ $comments := index $item "comments" }}
-          <a href="/stories/{{ index $item "guid" }}/">{{$comments}} comment{{adds $comments}}</a>        
-                </span>
-              </td></tr>
+      {{ template "_story" $item}}
       <tr class="spacer" style="height:5px"></tr>
 {{end}}
