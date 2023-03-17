@@ -11,36 +11,37 @@ import (
 func HandleComments(c *router.Context, second, third string) {
 	if second == "" {
 		c.NotFound = true
-	} else if third != "" {
-		c.NotFound = true
-	} else {
+	} else if second != "" && third == "" {
 		if c.Method == "POST" {
 			postComment(c, second)
 		} else {
 			showComment(c, second)
 		}
+	} else {
+		c.NotFound = true
 	}
 }
 
 func showComment(c *router.Context, second string) {
-	comment := FetchComment(c.Db, second)
-	if comment == nil {
+	comment := FetchComment(c, second)
+	if len(comment) == 0 {
 		c.NotFound = true
 		return
 	}
-	c.Title = comment.RawBody
+	c.Title = comment["body"].(string)
 	if len(c.Title) > 80 {
 		c.Title = c.Title[0:80] + "..."
 	}
-	story := FetchStory(c.Db, comment.StoryGuid)
-	if story == nil {
+	story := FetchStory(c, comment["story_guid"].(string))
+	if len(story) == 0 {
 		c.NotFound = true
 		return
 	}
-	comment.StoryTitle = story.Title
-	if len(comment.StoryTitle) > 40 {
-		comment.StoryTitle = comment.StoryTitle[0:40] + "..."
+	title := story["title"].(string)
+	if len(title) > 40 {
+		title = title[0:40] + "..."
 	}
+	comment["story_title"] = title
 	c.SendContentInLayout("comments_show.html", comment, 200)
 	return
 }
@@ -59,15 +60,15 @@ func postComment(c *router.Context, second string) {
 	}
 
 	guid := util.PseudoUuid()
-	story := FetchStory(c.Db, second)
-	if story == nil {
+	story := FetchStory(c, second)
+	if len(story) == 0 {
 		c.NotFound = true
 		return
 	}
 
 	tx := c.Db.MustBegin()
-	tx.Exec("insert into comments (body, guid, username, story_id, story_guid) values ($1, $2, $3, $4, $5)", body, guid, c.User.Username, story.Id, story.Guid)
-	tx.Exec("update stories set comments=comments+1 where id=$1", story.Id)
+	tx.Exec("insert into comments (body, guid, username, story_id, story_guid) values ($1, $2, $3, $4, $5)", body, guid, c.User.Username, story["id"], story["guid"])
+	tx.Exec("update stories set comments=comments+1 where id=$1", story["id"])
 	tx.Commit()
 	http.Redirect(c.Writer, c.Request, returnPath, 302)
 }

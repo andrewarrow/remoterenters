@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/andrewarrow/feedback/models"
+	"github.com/andrewarrow/feedback/router"
 	"github.com/jmoiron/sqlx"
 )
 
@@ -25,19 +26,10 @@ type Story struct {
 	Points    int64
 }
 
-func FetchStory(db *sqlx.DB, guid string) *Story {
-	rows, err := db.Queryx("select * from stories where guid=$1", guid)
-	if err != nil {
-		return nil
-	}
-	defer rows.Close()
-	rows.Next()
-	m := make(map[string]any)
-	rows.MapScan(m)
-	if len(m) == 0 {
-		return nil
-	}
-	return storyFromMap(m)
+func FetchStory(c *router.Context, guid string) map[string]any {
+	model := c.FindModel("story")
+	params := []any{guid}
+	return c.SelectOneFrom(model, "where guid=$1", params)
 }
 
 func storyFromMap(m map[string]any) *Story {

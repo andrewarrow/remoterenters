@@ -81,17 +81,16 @@ func handleStoryShow(c *router.Context, second string) {
 
 		storyShow := StoryShow{}
 
-		model := c.FindModel("story")
-		params := []any{second}
-		storyShow.Story = c.SelectOneFrom(model, "where guid=$1", params)
+		storyShow.Story = FetchStory(c, second)
 
 		if len(storyShow.Story) == 0 {
 			c.NotFound = true
 			return
 		}
-		model = c.FindModel("comment")
-		params = []any{storyShow.Story["id"]}
+		model := c.FindModel("comment")
+		params := []any{storyShow.Story["id"]}
 		storyShow.Comments = c.SelectAllFrom(model, "where story_id=$1", params)
+		c.Title = storyShow.Story["title"].(string)
 		c.SendContentInLayout("stories_show.html", storyShow, 200)
 		return
 	}
