@@ -1,6 +1,11 @@
 package app
 
-import "github.com/andrewarrow/feedback/router"
+import (
+	"net/http"
+
+	"github.com/andrewarrow/feedback/router"
+	"github.com/andrewarrow/feedback/util"
+)
 
 func HandleSubs(c *router.Context, second, third string) {
 	if second == "" {
@@ -25,9 +30,19 @@ func handleSubsShow(c *router.Context, slug string) {
 	if len(sub) == 0 {
 		c.SendContentInLayout("subs_new.html", slug, 200)
 	} else {
-		c.SendContentInLayout("subs_show.html", nil, 200)
+		model := c.FindModel("story")
+		params := []any{slug}
+		rows := c.SelectAllFrom(model, "where sub=$1 order by points desc", params)
+		c.SendContentInLayout("stories_index.html", rows, 200)
 	}
 }
 
 func handleCreateSub(c *router.Context, slug string) {
+	if c.User == nil {
+		c.UserRequired = true
+		return
+	}
+	guid := util.PseudoUuid()
+	c.Db.Exec("insert into subs (guid, slug, user_id) values ($1, $2, $3)", guid, slug, c.User.Id)
+	http.Redirect(c.Writer, c.Request, "/rr/"+slug+"/", 302)
 }
