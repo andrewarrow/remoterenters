@@ -27,7 +27,11 @@
         <td class="subtext"><span class="subline">
           {{ $points := index . "points" }}
           <span class="score">{{$points}} point{{adds $points}}</span> 
-          by <a href="/users/{{index . "username"}}/" class="user">{{index . "username"}}</a> 
+          by <a href="/users/{{index . "username"}}/" class="user">{{index . "username"}}</a>
+{{$sub := index . "sub"}}
+{{if ne $sub ""}}
+in <a href="/rr/{{$sub}}/">{{ $sub }}</a>
+{{end}}
           <span class="age" title="{{index . "created_at"}}">
                   <a href="/stories/{{index . "guid"}}/">{{index . "created_at_ago"}}</a></span> |
           <a href="/stories/{{ index . "guid" }}/">discuss</a> |

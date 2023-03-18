@@ -2,8 +2,20 @@
 </tr>
 <tr>
       <td>
+      <form id="form1" method="POST" action="/cookies/remove-sub">
+        <input type="hidden" name="_method" value="DELETE"/>
+      </form>
         <form action="/stories/" method="POST">
                 <table border="0">
+                        {{ if ne . "" }}
+                        <tr>
+                                <td>sub</td>
+                                <td>
+                                <a href="/rr/{{.}}/">{{ . }}</a>
+                                (<a href="#" onclick="event.preventDefault(); document.getElementById('form1').submit();">remove sub</a>)
+                                </td>
+                        </tr>
+                        {{ end }}
                         <tr>
                                 <td>title</td>
                                 <td><input type="text" name="title" value="" size="50" autofocus="t">

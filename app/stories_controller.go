@@ -56,11 +56,12 @@ func handleStoriesIndex(c *router.Context) {
 			return
 		}
 		guid := util.PseudoUuid()
+		sub := router.GetCookie(c, "sub")
 		if url != "" {
 			domain := util.ExtractDomain(url)
-			c.Db.Exec("insert into stories (title, url, guid, username, domain) values ($1, $2, $3, $4, $5)", title, url, guid, c.User.Username, domain)
+			c.Db.Exec("insert into stories (sub, title, url, guid, username, domain) values ($1, $2, $3, $4, $5, $6)", sub, title, url, guid, c.User.Username, domain)
 		} else {
-			c.Db.Exec("insert into stories (title, body, guid, username) values ($1, $2, $3, $4)", title, body, guid, c.User.Username)
+			c.Db.Exec("insert into stories (sub, title, body, guid, username) values ($1, $2, $3, $4, $5)", sub, title, body, guid, c.User.Username)
 		}
 		http.Redirect(c.Writer, c.Request, "/", 302)
 		return
@@ -79,7 +80,8 @@ func handleStoryShow(c *router.Context, second string) {
 			c.UserRequired = true
 			return
 		}
-		c.SendContentInLayout("stories_new.html", nil, 200)
+		sub := router.GetCookie(c, "sub")
+		c.SendContentInLayout("stories_new.html", sub, 200)
 	} else if second != "" {
 
 		story := FetchStory(c, second)

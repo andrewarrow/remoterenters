@@ -14,6 +14,6 @@ func HandleWelcome(c *router.Context, second, third string) {
 
 func handleWelcomeIndex(c *router.Context) {
 	model := c.FindModel("story")
-	rows := c.SelectAllFrom(model, "where sub='' order by points desc", c.EmptyParams())
+	rows := c.SelectAllFrom(model, "order by points desc", c.EmptyParams())
 	c.SendContentInLayout("stories_index.html", rows, 200)
 }

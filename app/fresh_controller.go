@@ -14,6 +14,6 @@ func HandleFresh(c *router.Context, second, third string) {
 
 func handleFreshIndex(c *router.Context) {
 	model := c.FindModel("story")
-	rows := c.SelectAllFrom(model, "where sub='' order by created_at desc", c.EmptyParams())
+	rows := c.SelectAllFrom(model, "order by created_at desc", c.EmptyParams())
 	c.SendContentInLayout("stories_index.html", rows, 200)
 }

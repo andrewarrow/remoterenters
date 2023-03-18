@@ -6,3 +6,16 @@
       {{ template "_story" $item}}
       <tr class="spacer" style="height:5px"></tr>
 {{end}}
+
+{{$size := len . }}
+{{if eq $size 0 }}
+      <tr class="spacer" style="height:5px"></tr>
+ <tr class='athing'>
+      <td align="right" valign="top" class="title">
+              &nbsp;
+              &nbsp;
+              &nbsp;
+      </td>      
+      <td>No stories yet, <a href="/stories/new/">submit one</a>.</td>
+ </tr>
+{{end}}

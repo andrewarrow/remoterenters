@@ -30,6 +30,7 @@ func handleSubsShow(c *router.Context, slug string) {
 	if len(sub) == 0 {
 		c.SendContentInLayout("subs_new.html", slug, 200)
 	} else {
+		router.SetCookie(c, "sub", slug)
 		model := c.FindModel("story")
 		params := []any{slug}
 		rows := c.SelectAllFrom(model, "where sub=$1 order by points desc", params)
