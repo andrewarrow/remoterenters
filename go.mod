@@ -1,6 +1,6 @@
 module remoterenters
 
-//replace github.com/andrewarrow/feedback => /Users/aa/os/feedback
+#replace github.com/andrewarrow/feedback => /Users/aa/os/feedback
 
 go 1.19
 

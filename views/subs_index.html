@@ -1,23 +1,34 @@
+{{range $i, $item := .}}
  <tr class='athing'>
-      <td>      
-              &nbsp;
-              &nbsp;
-      </td>      
+      <td valign="top" class="votelinks">
+        <center>
+                &nbsp;
+                &nbsp;
+        </center>
+      </td>
       <td align="right" valign="top" class="title">
-              &nbsp;
-              &nbsp;
+              <span class="rank">{{add $i 1}}.</span>
       </td>      
+      <td valign="top" class="votelinks">
+        <center>
+                &nbsp;
+                &nbsp;
+        </center>
+      </td>
       <td class="title">
             <span class="titleline">
-              &nbsp;
+        <a href="/rr/{{index . "slug"}}/" rel="nofollow">{{index . "slug"}}</a>
             </span>
         </td>
        </tr>
        <tr>
-        <td colspan="2"></td>
-        <td class="subtext2">
-                <p>
-                Coming soon!
-                </p>
+        <td colspan="3"></td>
+        <td class="subtext"><span class="subline">
+          by <a href="/users/{{index . "username"}}/" class="user">{{index . "username"}}</a>
+          <span class="age" title="{{index . "created_at"}}">
+                  <a href="/rr/{{index . "slug"}}/">{{index . "created_at_ago"}}</a></span> |
+          <a href="/rr/{{ index . "slug" }}/">join</a> 
+                </span>
               </td></tr>
-      <tr class="spacer" style="height:15px"></tr>
+      <tr class="spacer" style="height:5px"></tr>
+{{end}}

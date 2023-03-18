@@ -59,9 +59,9 @@ func handleStoriesIndex(c *router.Context) {
 		sub := router.GetCookie(c, "sub")
 		if url != "" {
 			domain := util.ExtractDomain(url)
-			c.Db.Exec("insert into stories (sub, title, url, guid, username, domain) values ($1, $2, $3, $4, $5, $6)", sub, title, url, guid, c.User.Username, domain)
+			c.Db.Exec("insert into stories (points, sub, title, url, guid, username, domain) values ($1, $2, $3, $4, $5, $6, $7)", 1, sub, title, url, guid, c.User.Username, domain)
 		} else {
-			c.Db.Exec("insert into stories (sub, title, body, guid, username) values ($1, $2, $3, $4, $5)", sub, title, body, guid, c.User.Username)
+			c.Db.Exec("insert into stories (points, sub, title, body, guid, username) values ($1, $2, $3, $4, $5, $6)", 1, sub, title, body, guid, c.User.Username)
 		}
 		http.Redirect(c.Writer, c.Request, "/", 302)
 		return

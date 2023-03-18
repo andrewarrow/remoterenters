@@ -29,6 +29,7 @@ func main() {
 		r.Paths["stories"] = app.HandleStories
 		r.Paths["cookies"] = app.HandleCookies
 		r.Paths["rr"] = app.HandleSubs
+		r.Paths["subs"] = app.HandleAdminSubs
 
 		r.ListenAndServe(":3000")
 	} else if arg == "help" {

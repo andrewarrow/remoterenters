@@ -3,6 +3,7 @@ package app
 import (
 	"net/http"
 
+	"github.com/andrewarrow/feedback/models"
 	"github.com/andrewarrow/feedback/router"
 	"github.com/andrewarrow/feedback/util"
 )
@@ -11,7 +12,7 @@ func HandleSubs(c *router.Context, second, third string) {
 	if second == "" {
 		handleSubsIndex(c)
 	} else if second != "" && third == "" {
-		handleSubsShow(c, second)
+		handleSubsShow(c, models.MakeSlug(second))
 	} else {
 		c.NotFound = true
 	}
@@ -44,6 +45,7 @@ func handleCreateSub(c *router.Context, slug string) {
 		return
 	}
 	guid := util.PseudoUuid()
-	c.Db.Exec("insert into subs (guid, slug, user_id) values ($1, $2, $3)", guid, slug, c.User.Id)
+	c.Db.Exec("insert into subs (username, guid, slug, user_id) values ($1, $2, $3, $4)",
+		c.User.Username, guid, slug, c.User.Id)
 	http.Redirect(c.Writer, c.Request, "/rr/"+slug+"/", 302)
 }
