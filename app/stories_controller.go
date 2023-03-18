@@ -63,7 +63,11 @@ func handleStoriesIndex(c *router.Context) {
 		} else {
 			c.Db.Exec("insert into stories (points, sub, title, body, guid, username) values ($1, $2, $3, $4, $5, $6)", 1, sub, title, body, guid, c.User.Username)
 		}
-		http.Redirect(c.Writer, c.Request, "/", 302)
+		if sub == "" {
+			http.Redirect(c.Writer, c.Request, "/", 302)
+		} else {
+			http.Redirect(c.Writer, c.Request, "/rr/"+sub+"/", 302)
+		}
 		return
 	}
 	c.NotFound = true
@@ -71,7 +75,7 @@ func handleStoriesIndex(c *router.Context) {
 
 type StoryShow struct {
 	Story    map[string]any
-	Comments []*map[string]any
+	Comments []map[string]any
 }
 
 func handleStoryShow(c *router.Context, second string) {
