@@ -51,7 +51,7 @@ func showComment(c *router.Context, second string) {
 }
 
 func postComment(c *router.Context, second string) {
-	if c.User == nil {
+	if len(c.User) == 0 {
 		c.UserRequired = true
 		return
 	}
@@ -71,7 +71,7 @@ func postComment(c *router.Context, second string) {
 	}
 
 	tx := c.Db.MustBegin()
-	tx.Exec("insert into comments (body, guid, username, story_id, story_guid) values ($1, $2, $3, $4, $5)", body, guid, c.User.Username, story["id"], story["guid"])
+	tx.Exec("insert into comments (body, guid, username, story_id, story_guid) values ($1, $2, $3, $4, $5)", body, guid, c.User["username"], story["id"], story["guid"])
 	tx.Exec("update stories set comments=comments+1 where id=$1", story["id"])
 	tx.Commit()
 	http.Redirect(c.Writer, c.Request, returnPath, 302)

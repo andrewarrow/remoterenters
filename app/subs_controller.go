@@ -32,20 +32,19 @@ func handleSubsShow(c *router.Context, slug string) {
 		c.SendContentInLayout("subs_new.html", slug, 200)
 	} else {
 		router.SetCookie(c, "sub", slug)
-		model := c.FindModel("story")
 		params := []any{slug}
-		rows := c.SelectAllFrom(model, "where sub=$1 order by points desc", params)
+		rows := c.SelectAll("story", "where sub=$1 order by points desc", params)
 		c.SendContentInLayout("stories_index.html", rows, 200)
 	}
 }
 
 func handleCreateSub(c *router.Context, slug string) {
-	if c.User == nil {
+	if len(c.User) == 0 {
 		c.UserRequired = true
 		return
 	}
 	guid := util.PseudoUuid()
 	c.Db.Exec("insert into subs (username, guid, slug, user_id) values ($1, $2, $3, $4)",
-		c.User.Username, guid, slug, c.User.Id)
+		c.User["username"], guid, slug, c.User["id"])
 	http.Redirect(c.Writer, c.Request, "/rr/"+slug+"/", 302)
 }

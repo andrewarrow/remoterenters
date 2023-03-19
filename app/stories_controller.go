@@ -59,9 +59,9 @@ func handleStoriesIndex(c *router.Context) {
 		sub := router.GetCookie(c, "sub")
 		if url != "" {
 			domain := util.ExtractDomain(url)
-			c.Db.Exec("insert into stories (points, sub, title, url, guid, username, domain) values ($1, $2, $3, $4, $5, $6, $7)", 1, sub, title, url, guid, c.User.Username, domain)
+			c.Db.Exec("insert into stories (points, sub, title, url, guid, username, domain) values ($1, $2, $3, $4, $5, $6, $7)", 1, sub, title, url, guid, c.User["username"], domain)
 		} else {
-			c.Db.Exec("insert into stories (points, sub, title, body, guid, username) values ($1, $2, $3, $4, $5, $6)", 1, sub, title, body, guid, c.User.Username)
+			c.Db.Exec("insert into stories (points, sub, title, body, guid, username) values ($1, $2, $3, $4, $5, $6)", 1, sub, title, body, guid, c.User["username"])
 		}
 		if sub == "" {
 			http.Redirect(c.Writer, c.Request, "/", 302)
@@ -80,7 +80,7 @@ type StoryShow struct {
 
 func handleStoryShow(c *router.Context, second string) {
 	if second == "new" {
-		if c.User == nil {
+		if len(c.User) == 0 {
 			c.UserRequired = true
 			return
 		}
@@ -97,11 +97,10 @@ func handleStoryShow(c *router.Context, second string) {
 		story["title"] = models.RemoveMostNonAlphanumeric(story["title"].(string))
 		body := strings.Replace(html.EscapeString(story["body"].(string)), "\n", "<br/>", -1)
 		story["body"] = template.HTML(body + "<br/><br/>")
-		model := c.FindModel("comment")
 		params := []any{story["id"]}
 		storyShow := StoryShow{}
 		storyShow.Story = story
-		storyShow.Comments = c.SelectAllFrom(model, "where story_id=$1", params)
+		storyShow.Comments = c.SelectAll("comment", "where story_id=$1", params)
 		c.Title = storyShow.Story["title"].(string)
 		c.SendContentInLayout("stories_show.html", storyShow, 200)
 	}

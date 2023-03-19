@@ -5,7 +5,6 @@ import (
 )
 
 func FetchComment(c *router.Context, guid string) map[string]any {
-	model := c.FindModel("comment")
 	params := []any{guid}
-	return c.SelectOneFrom(model, "where guid=$1", params)
+	return c.SelectOne("comment", "where guid=$1", params)
 }

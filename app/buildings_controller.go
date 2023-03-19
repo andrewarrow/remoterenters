@@ -13,8 +13,7 @@ func HandleBuildings(c *router.Context, second, third string) {
 }
 
 func handleBuildingsIndex(c *router.Context) {
-	model := c.FindModel("building")
-	rows := c.SelectAllFrom(model, "", c.EmptyParams())
+	rows := c.SelectAll("building", "", []any{})
 	c.SendContentInLayout("buildings_index.html", rows, 200)
 }
 
