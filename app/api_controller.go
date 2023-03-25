@@ -15,10 +15,10 @@ func HandleApi(c *router.Context, second, third string) {
 func handleApiCreateUser(c *router.Context) {
 	message := c.ValidateJsonForModel("user")
 	if message != "" {
-		c.SendContentAsJson(c.JsonInfo(message), 422)
+		c.SendContentAsJsonMessage(message, 422)
 		return
 	}
 
-	c.SendContentAsJson(c.JsonInfo("ok"), 200)
+	c.SendContentAsJsonMessage("ok", 200)
 
 }
