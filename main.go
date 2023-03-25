@@ -30,6 +30,7 @@ func main() {
 		r.Paths["cookies"] = app.HandleCookies
 		r.Paths["rr"] = app.HandleSubs
 		r.Paths["subs"] = app.HandleAdminSubs
+		r.Paths["api"] = app.HandleApi
 
 		r.ListenAndServe(":3000")
 	} else if arg == "help" {
