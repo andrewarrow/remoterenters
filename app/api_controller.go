@@ -13,14 +13,12 @@ func HandleApi(c *router.Context, second, third string) {
 }
 
 func handleApiCreateUser(c *router.Context) {
-	params := c.ReadBodyIntoJson()
-	model := c.FindModel("user")
-	for _, field := range model.RequiredFields() {
-		if params[field.Name] == nil {
-			c.SendContentAsJson(c.JsonInfo("missing "+field.Name), 422)
-			return
-		}
+	message := c.ValidateJsonForModel("user")
+	if message != "" {
+		c.SendContentAsJson(c.JsonInfo(message), 422)
+		return
 	}
 
 	c.SendContentAsJson(c.JsonInfo("ok"), 200)
+
 }
