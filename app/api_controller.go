@@ -19,6 +19,12 @@ func handleApiCreateUser(c *router.Context) {
 		return
 	}
 
-	c.SendContentAsJsonMessage("ok", 200)
-
+	message = c.CreateRowFromJson("user")
+	if message != "" {
+		c.SendContentAsJsonMessage(message, 422)
+		return
+	}
+	guid := c.Params["guid"]
+	row := c.SelectOne("user", "where guid=$1", []any{guid})
+	c.SendContentAsJson(row, 200)
 }
