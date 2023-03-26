@@ -2,7 +2,6 @@ package app
 
 import (
 	"github.com/andrewarrow/feedback/router"
-	"github.com/andrewarrow/feedback/util"
 )
 
 func handleApiCreateStory(c *router.Context) {
@@ -16,11 +15,7 @@ func handleApiCreateStory(c *router.Context) {
 		return
 	}
 
-	if c.Params["url"] != nil {
-		c.Params["domain"] = util.ExtractDomain(c.Params["url"].(string))
-	}
-	c.Params["username"] = c.User["username"].(string)
-	c.Params["points"] = 1
+	PrepStory(c)
 	message = c.CreateRowFromJson("story")
 	if message != "" {
 		c.SendContentAsJsonMessage(message, 422)
