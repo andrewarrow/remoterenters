@@ -10,7 +10,7 @@ func handleApiCreateStory(c *router.Context) {
 		c.SendContentAsJsonMessage("Authorization bad", 401)
 		return
 	}
-	message := c.ValidateJsonForModel("story")
+	message := c.ValidateJsonForModel(true, "story")
 	if message != "" {
 		c.SendContentAsJsonMessage(message, 422)
 		return

@@ -27,11 +27,20 @@ func handleStoriesIndex(c *router.Context) {
 		url := strings.TrimSpace(c.Request.FormValue("url"))
 		body := strings.TrimSpace(c.Request.FormValue("body"))
 		sub := router.GetCookie(c, "sub")
-		c.Params = map[string]any{"title": title,
-			"url": url, "body": body, "sub": sub}
+
+		c.Params = map[string]any{"title": title}
+		if body != "" {
+			c.Params["body"] = body
+		}
+		if url != "" {
+			c.Params["url"] = url
+		}
+		if sub != "" {
+			c.Params["sub"] = sub
+		}
 
 		returnPath := "/stories/new"
-		message := c.ValidateJsonForModel("story")
+		message := c.ValidateJsonForModel(false, "story")
 		if message != "" {
 			router.SetFlash(c, message)
 			http.Redirect(c.Writer, c.Request, returnPath, 302)
