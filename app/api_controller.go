@@ -5,8 +5,13 @@ import (
 )
 
 func HandleApi(c *router.Context, second, third string) {
+	c.Layout = "json"
 	if second == "user" && third == "" && c.Method == "POST" {
 		handleApiCreateUser(c)
+		return
+	}
+	if second == "story" && third == "" && c.Method == "POST" {
+		handleApiCreateStory(c)
 		return
 	}
 	c.NotFound = true
