@@ -1,0 +1,25 @@
+{{ $model := index . "model"}}
+{{ $field := index . "field"}}
+
+<form id="form1" method="POST" action="/fields/{{$model.Name}}/{{$field.Name}}">
+        <div>name     <input type="text" name="name" value="{{$field.Name}}" />
+        </div>
+        <div>
+                flavor
+        <input type="text" name="flavor" value="{{$field.Flavor}}" />
+        </div>
+        <div>
+                index
+        <input type="text" name="index" value="{{$field.Index}}" />
+        </div>
+        <div>
+                required
+        <input type="text" name="required" value="{{$field.Required}}" />
+        </div>
+        <div>
+                regex
+        <input type="text" name="regex" value="{{$field.Regex}}" />
+        </div>
+ <input type="submit" value="update field"/>
+ <input type="hidden" name="_method" value="PATCH"/>
+</form>

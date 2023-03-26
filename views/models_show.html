@@ -9,6 +9,7 @@
                   <tr class="athing">
                     <td class="title">
                       <table id="models" border="0">
+             {{ $model := .Model}}
              {{range $i, $item := .Model.Fields}}
                   <tr class="athing" colspan="2">
                           <td>x</td>
@@ -17,7 +18,7 @@
                     </td>      
                     <td class="title">
                      <span class="titleline">
-                             <a href="/models/{{$item.Name}}/">{{$item.Name}}</a>
+                             <a href="/fields/{{$model.Name}}/{{$item.Name}}">{{$item.Name}}</a>
                      </span>
                     </td>
                     <td class="title">
@@ -25,6 +26,9 @@
                     </td>
                     <td class="title">
                             {{$item.Index}}
+                    </td>
+                    <td class="title">
+                            {{$item.Required}}
                     </td>
                  </tr>
              {{end}}
@@ -74,7 +78,6 @@
              {{end}}
                  </tr>
              {{$rows := .Rows}}
-             {{$model := .Model}}
              {{range $i, $item := $rows }}
                   <tr class="athing" colspan="2">
                     <td class="title" valign="top">
@@ -103,3 +106,13 @@
                        </form>
                      </td></tr>
                       </table></td></tr>
+
+                      <div>
+                              Rename
+               <form  method="POST" action="/models/{{.Model.Name}}">
+        <div>name     <input type="text" name="name" value="{{.Model.Name}}" />
+        </div>
+                 <input type="hidden" name="_method" value="PATCH"/>
+                 <input type="submit" value="rename"/>
+               </form>
+                      </div>
