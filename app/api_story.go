@@ -1,6 +1,13 @@
 package app
 
-import "github.com/andrewarrow/feedback/router"
+import (
+	"html"
+	"html/template"
+	"strings"
+
+	"github.com/andrewarrow/feedback/models"
+	"github.com/andrewarrow/feedback/router"
+)
 
 func handleApiCreateStory(c *router.Context) {
 	if c.User == nil {
@@ -13,6 +20,9 @@ func handleApiCreateStory(c *router.Context) {
 		return
 	}
 
+	c.Params["title"] = models.RemoveMostNonAlphanumeric(c.Params["title"].(string))
+	body := strings.Replace(html.EscapeString(c.Params["body"].(string)), "\n", "<br/>", -1)
+	c.Params["body"] = template.HTML(body + "<br/><br/>")
 	c.Params["username"] = c.User["username"].(string)
 	message = c.CreateRowFromJson("story")
 	if message != "" {

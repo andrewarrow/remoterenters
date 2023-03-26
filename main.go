@@ -1,11 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"math/rand"
 	"os"
 	"remoterenters/app"
 	"time"
 
+	"github.com/andrewarrow/feedback/persist"
 	"github.com/andrewarrow/feedback/router"
 )
 
@@ -33,6 +35,9 @@ func main() {
 		r.Paths["api"] = app.HandleApi
 
 		r.ListenAndServe(":3000")
-	} else if arg == "help" {
+	} else if arg == "export" {
+		db := persist.PostgresConnection()
+		jsonString := persist.SchemaJson(db)
+		fmt.Println(jsonString)
 	}
 }
