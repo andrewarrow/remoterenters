@@ -20,6 +20,7 @@ func handleApiCreateStory(c *router.Context) {
 		c.Params["domain"] = util.ExtractDomain(c.Params["url"].(string))
 	}
 	c.Params["username"] = c.User["username"].(string)
+	c.Params["points"] = 1
 	message = c.CreateRowFromJson("story")
 	if message != "" {
 		c.SendContentAsJsonMessage(message, 422)
