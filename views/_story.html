@@ -29,7 +29,7 @@
           <span class="score">{{$points}} point{{adds $points}}</span> 
           by <a href="/users/{{index . "username"}}/" class="user">{{index . "username"}}</a>
 {{$sub := index . "sub"}}
-{{if ne $sub ""}}
+{{if $sub}}
 in <a href="/rr/{{$sub}}/">{{ $sub }}</a>
 {{end}}
           <span class="age" title="{{index . "created_at"}}">
