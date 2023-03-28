@@ -21,7 +21,7 @@ func main() {
 	if arg == "init" {
 		router.InitNewApp()
 	} else if arg == "run" {
-		r := router.NewRouter()
+		r := router.NewRouter("DATABASE_URL")
 		r.Paths["/"] = app.HandleWelcome
 		r.Paths["buildings"] = app.HandleBuildings
 		r.Paths["fresh"] = app.HandleFresh
@@ -37,7 +37,7 @@ func main() {
 
 		r.ListenAndServe(":3000")
 	} else if arg == "export" {
-		db := persist.PostgresConnection()
+		db := persist.PostgresConnection("DATABASE_URL")
 		jsonString := persist.SchemaJson(db)
 		fmt.Println(jsonString)
 	}
