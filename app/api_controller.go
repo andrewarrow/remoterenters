@@ -18,13 +18,14 @@ func HandleApi(c *router.Context, second, third string) {
 }
 
 func handleApiCreateUser(c *router.Context) {
-	message := c.ValidateJsonForModel(true, "user")
+	c.Params = c.ReadBodyIntoJson()
+	message := c.Validate("user")
 	if message != "" {
 		c.SendContentAsJsonMessage(message, 422)
 		return
 	}
 
-	message = c.CreateRowFromJson("user")
+	message = c.Insert("user")
 	if message != "" {
 		c.SendContentAsJsonMessage(message, 422)
 		return

@@ -40,14 +40,14 @@ func handleStoriesIndex(c *router.Context) {
 		}
 
 		returnPath := "/stories/new"
-		message := c.ValidateJsonForModel(false, "story")
+		message := c.Validate("story")
 		if message != "" {
 			router.SetFlash(c, message)
 			http.Redirect(c.Writer, c.Request, returnPath, 302)
 			return
 		}
 
-		message = c.CreateRowFromJson("story")
+		message = c.Insert("story")
 		if message != "" {
 			router.SetFlash(c, message)
 			http.Redirect(c.Writer, c.Request, returnPath, 302)
