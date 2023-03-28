@@ -46,7 +46,7 @@ func handleStoriesIndex(c *router.Context) {
 			http.Redirect(c.Writer, c.Request, returnPath, 302)
 			return
 		}
-		PrepStory(c)
+
 		message = c.CreateRowFromJson("story")
 		if message != "" {
 			router.SetFlash(c, message)

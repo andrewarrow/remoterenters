@@ -15,7 +15,6 @@ func handleApiCreateStory(c *router.Context) {
 		return
 	}
 
-	PrepStory(c)
 	message = c.CreateRowFromJson("story")
 	if message != "" {
 		c.SendContentAsJsonMessage(message, 422)

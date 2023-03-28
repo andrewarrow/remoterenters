@@ -33,6 +33,7 @@ func main() {
 		r.Paths["rr"] = app.HandleSubs
 		r.Paths["subs"] = app.HandleAdminSubs
 		r.Paths["api"] = app.HandleApi
+		r.BeforeCreate["story"] = app.PrepStory
 
 		r.ListenAndServe(":3000")
 	} else if arg == "export" {
