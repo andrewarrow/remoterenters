@@ -8,7 +8,6 @@ import (
 	"remoterenters/app"
 	"time"
 
-	"github.com/andrewarrow/feedback/persist"
 	"github.com/andrewarrow/feedback/router"
 )
 
@@ -25,6 +24,7 @@ func main() {
 	if arg == "init" {
 		router.InitNewApp()
 	} else if arg == "run" {
+		fmt.Println(len(embeddedFile))
 		r := router.NewRouter("DATABASE_URL", embeddedFile)
 		r.Paths["/"] = app.HandleWelcome
 		r.Paths["buildings"] = app.HandleBuildings
@@ -40,9 +40,5 @@ func main() {
 		r.BeforeCreate["story"] = app.PrepStory
 
 		r.ListenAndServe(":3000")
-	} else if arg == "export" {
-		db := persist.PostgresConnection("DATABASE_URL")
-		jsonString := persist.SchemaJson(db)
-		fmt.Println(jsonString)
 	}
 }
