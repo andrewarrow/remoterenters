@@ -1,6 +1,7 @@
 package main
 
 import (
+	_ "embed"
 	"fmt"
 	"math/rand"
 	"os"
@@ -24,7 +25,7 @@ func main() {
 	if arg == "init" {
 		router.InitNewApp()
 	} else if arg == "run" {
-		r := router.NewRouter("DATABASE_URL")
+		r := router.NewRouter("DATABASE_URL", embeddedFile)
 		r.Paths["/"] = app.HandleWelcome
 		r.Paths["buildings"] = app.HandleBuildings
 		r.Paths["fresh"] = app.HandleFresh
