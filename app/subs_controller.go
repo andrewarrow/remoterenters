@@ -33,7 +33,7 @@ func handleSubsShow(c *router.Context, slug string) {
 	} else {
 		router.SetCookie(c, "sub", slug)
 		params := []any{slug}
-		rows := c.SelectAll("story", "where sub=$1 order by points desc", params)
+		rows := c.SelectAll("story", "where sub=$1 order by points desc", params, "")
 		c.SendContentInLayout("stories_index.html", rows, 200)
 	}
 }

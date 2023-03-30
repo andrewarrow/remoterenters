@@ -15,7 +15,7 @@ func HandleAdminSubs(c *router.Context, second, third string) {
 }
 
 func handleAdminSubsIndex(c *router.Context) {
-	rows := c.SelectAll("sub", "order by created_at desc", []any{})
+	rows := c.SelectAll("sub", "order by created_at desc", []any{}, "")
 	c.SendContentInLayout("subs_index.html", rows, 200)
 }
 
@@ -28,6 +28,6 @@ func handleAdminSubsByUsername(c *router.Context, username string) {
 
 	params := []any{u["id"]}
 	rows := c.SelectAll("sub", "where user_id=$1 order by created_at desc",
-		params)
+		params, "")
 	c.SendContentInLayout("subs_index.html", rows, 200)
 }

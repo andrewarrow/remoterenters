@@ -11,6 +11,9 @@ import (
 	"github.com/andrewarrow/feedback/router"
 )
 
+//go:embed app/feedback.json
+var embeddedFile []byte
+
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	if len(os.Args) == 1 {

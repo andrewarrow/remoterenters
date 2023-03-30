@@ -91,7 +91,7 @@ func handleStoryShow(c *router.Context, second string) {
 		params := []any{story["id"]}
 		storyShow := StoryShow{}
 		storyShow.Story = story
-		storyShow.Comments = c.SelectAll("comment", "where story_id=$1", params)
+		storyShow.Comments = c.SelectAll("comment", "where story_id=$1", params, "")
 		c.Title = storyShow.Story["title"].(string)
 		c.SendContentInLayout("stories_show.html", storyShow, 200)
 	}
