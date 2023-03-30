@@ -3,6 +3,18 @@
   "title": "RemoteRenters",
   "models": [
     {
+      "name": "test",
+      "fields": [
+        {
+          "name": "username",
+          "flavor": "username",
+          "index": "unique",
+          "required": "",
+          "regex": "",
+          "null": ""
+        }]
+    },
+    {
       "name": "user",
       "fields": [
         {
