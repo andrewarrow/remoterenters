@@ -40,7 +40,7 @@ func handleStoriesIndex(c *router.Context) {
 		}
 
 		returnPath := "/stories/new"
-		message := c.Validate("story")
+		message := c.ValidateCreate("story")
 		if message != "" {
 			router.SetFlash(c, message)
 			http.Redirect(c.Writer, c.Request, returnPath, 302)

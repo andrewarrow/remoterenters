@@ -10,7 +10,7 @@ func handleApiCreateStory(c *router.Context) {
 		return
 	}
 	c.ReadJsonBodyIntoParams()
-	message := c.Validate("story")
+	message := c.ValidateCreate("story")
 	if message != "" {
 		c.SendContentAsJsonMessage(message, 422)
 		return
