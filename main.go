@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	_ "embed"
 	"fmt"
 	"math/rand"
@@ -14,6 +15,12 @@ import (
 //go:embed app/feedback.json
 var embeddedFile []byte
 
+//go:embed views/*.html
+var embeddedTemplates embed.FS
+
+//go:embed assets/**/*.*
+var embeddedAssets embed.FS
+
 func main() {
 	rand.Seed(time.Now().UnixNano())
 	if len(os.Args) == 1 {
@@ -25,6 +32,8 @@ func main() {
 		router.InitNewApp()
 	} else if arg == "run" {
 		fmt.Println(len(embeddedFile))
+		router.EmbeddedTemplates = embeddedTemplates
+		router.EmbeddedAssets = embeddedAssets
 		r := router.NewRouter("DATABASE_URL", embeddedFile)
 		r.Paths["/"] = app.HandleWelcome
 		r.Paths["buildings"] = app.HandleBuildings
