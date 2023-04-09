@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>{{ .Title }}</title>
+    <title>{{ index . "title" }}</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" type="text/css" href="/assets/css/style1.css">
     <script type='text/javascript' src="/assets/javascript/main.js"></script>
@@ -20,7 +20,7 @@
                   </td>
                   <td style="line-height:12pt; height:10px;">
                     <span class="pagetop">
-                            <b class="s1name"><a href="/">{{ .SiteName }}</a></b>
+                            <b class="s1name"><a href="/">{{ index . "site_name" }}</a></b>
                       <a href="/fresh">new</a> | 
                       <a href="/about">about</a> | 
                       <a href="/buildings">buildings</a> |
@@ -30,11 +30,12 @@
                   </td>
                   <td style="text-align:right;padding-right:4px;">
                     <span class="pagetop">
-                      {{ if .User }}
+                      {{$user := index . "user"}}
+                      {{ if index $user "id" }}
                       <form id="logout" method="POST" action="/sessions">
                         <input type="hidden" name="_method" value="DELETE"/>
                       </form>
-                      <a href="/users/{{ index .User "username" }}/">{{ index .User "username" }}</a> | <a onclick="doLogout(event);" href="#">logout</a>
+                      <a href="/users/{{ index $user "username" }}/">{{ index $user "username" }}</a> | <a onclick="doLogout(event);" href="#">logout</a>
                       {{ else }}
                       <a id="login" href="/sessions/new/">login</a>
                       {{ end }}
@@ -48,14 +49,14 @@
           <tr id="pagespace" title="" style="height:10px"></tr>
           <tr>
             <td>
-                    <div id="flash" style="background-color: red; color: white; text-align: center;">{{.Flash}}</div>
+                    <div id="flash" style="background-color: red; color: white; text-align: center;">{{index . "flash"}}</div>
             </td>
           </tr>
           <tr>
             <td>
               <table cellspacing="0" cellpadding="0" border="0">
                 <tbody>
-                  {{ .Content }}
+                  {{ index . "content" }}
                   <tr class="athing" id="34937128">
                     <td class="title" valign="top" align="right">
                          &nbsp;
@@ -66,7 +67,7 @@
             </td>
           </tr>
       </table>
-      <p>{{ .Footer }}</p>
+      <p>{{ index . "footer" }}</p>
     </center>
  </body>
 </html>
